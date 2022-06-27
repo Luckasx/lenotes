@@ -13,16 +13,7 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      notes: [
-        {
-          id: uuid(),
-          task: 'Learn React'
-        },
-        {
-          id: uuid(),
-          task: 'Do laundry'
-        }
-      ],
+      notes: [],
       response: ''
     };
   }
@@ -31,6 +22,10 @@ export default class App extends Component {
   componentDidMount() {
     this.callApi()
       .then(res => this.setState({ response: res.express }))
+      .catch(err => console.log(err));
+
+    this.getNotes()
+    .then(res => this.setState({ notes: res.notes }))
       .catch(err => console.log(err));
   }
 
@@ -41,6 +36,16 @@ export default class App extends Component {
 
     return body;
   };
+
+  getNotes = async() => {
+
+    const response = await fetch('/api/notes');
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+
+  }
 
   render() {
     
