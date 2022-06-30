@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 
-const notesRouter = require("./routes/notes")
+const notesRouter = require("./routes/notes.routes")
 
 // const cookieParser = require('cookie-parser');
 
