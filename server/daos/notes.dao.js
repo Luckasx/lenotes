@@ -10,21 +10,16 @@ const client = new MongoClient(
 exports.findNote = async () => {
   await client.connect();
   try {
-
     // query for movies that have a runtime less than 15 minutes
-    const query = { };
+    const query = {};
 
-    const result = await client.db("lenotes").collection("Notes").find(query).toArray();
-
-    
+    const result = await client
+      .db("lenotes")
+      .collection("Notes")
+      .find(query)
+      .toArray();
 
     if (result) {
-      //await result.forEach(
-    //     it => {
-    //         console.log(it);
-    //     }
-    //   );
-
       return result;
     } else {
       console.log(`No listings found with the name ..`);
@@ -34,5 +29,30 @@ exports.findNote = async () => {
     console.log("err...." + err);
   } finally {
     //await client.close();
+  }
+};
+
+exports.insert = async (note) => {
+  await client.connect();
+  try {
+    // query for movies that have a runtime less than 15 minutes
+    const query = {};
+
+    const result = await client
+      .db("lenotes")
+      .collection("Notes")
+      .insertOne(note);
+
+    if (result) {
+      console.log(result);
+      return { msg: "Insert OK. New ID: ...." };
+    } else {
+      console.log(`No listings found with the name ..`);
+      return [];
+    }
+  } catch (err) {
+    console.log("err...." + err);
+  } finally {
+    await client.close();
   }
 };
