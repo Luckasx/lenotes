@@ -1,4 +1,5 @@
 import React from "react";
+import { Row, Col } from "react-bootstrap";
 
 class Notes extends React.Component {
   constructor(props) {
@@ -13,28 +14,25 @@ class Notes extends React.Component {
   }
 
   render() {
-    console.log("props", this.props);
+    
+    const noteStyle = {
+      border: "1px solid gray",
+      minHeight: "200%",
+      color: "red"
+    }
 
     if (this.props.knotes === undefined) {
       return <span>No notes =(</span>;
     }
 
     return (
-      <ul>
-        {this.props.knotes.map((note) => (
-          <li key={note._id}>{note.text}</li>
-        ))}
-      </ul>
+      this.props.knotes.map((note) => (
+      <Col sm="3" className={noteStyle}>      
+        { note.text}
+      </Col>
+      ))
     );
   }
 }
-
-// const notes = ({notes}) => (
-//   <ul>{notes.map(note =>
-//     <li key={note.id}>{note.id}</li>
-
-//   )}
-//   </ul>
-// )
 
 export default Notes;

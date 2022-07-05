@@ -45,7 +45,7 @@ exports.insert = async (note) => {
 
     if (result) {
       console.log(result);
-      return { msg: "Insert OK. New ID: ...." };
+      return { msg: "Note Created." };
     } else {
       console.log(`No listings found with the name ..`);
       return [];

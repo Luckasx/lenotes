@@ -6,7 +6,9 @@ export default class NoteForm extends React.Component {
     super(props);
     this.state = {
       text: "",
-      visibility: 0
+      visibility: 0,
+      message: "",
+      messageClass: "",
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -14,7 +16,7 @@ export default class NoteForm extends React.Component {
     this.handleVisibility = this.handleVisibility.bind(this);
   }
 
-  handleVisibility(event){
+  handleVisibility(event) {
     this.setState({
       visibility: event.target.value,
     });
@@ -26,22 +28,53 @@ export default class NoteForm extends React.Component {
     });
   }
 
-  saveNote() {
+  saveNote = async () => {
     console.log(this.state.text);
-    fetch("/api/notes", {
+
+    let response = await fetch("/api/notes", {
       method: "POST",
-      body: JSON.stringify({ text: this.state.text }),
+      body: JSON.stringify({
+        text: this.state.text,
+        visibility: this.state.visibility,
+      }),
       // Adding headers to the request
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
     });
+
+    this.showFeedbackCreation(response);
+   
+  };
+
+  showFeedbackCreation = async (res ) => {
+
+    let expectedMessage = "Note Created.";
+
+    let response = await res.json();
+
+    if (response.msg === expectedMessage) {
+      this.setState({
+        text: "",
+        message: "Your note is saved",
+        messageClass: "text-success",
+      });
+    }
+
+    if (response.msg !== expectedMessage) {
+      this.setState({
+        text: "",
+        message: "There is a problem with the note. Error: " + response.msg,
+        messageClass: "text-danger",
+      });
+    }
+
   }
 
   render() {
     return (
       <Row>
-        <Col sm="12" md="4" >
+        <Col sm="12" md="4">
           <Form>
             <Row>
               <Col>
@@ -59,17 +92,30 @@ export default class NoteForm extends React.Component {
                 <Form.Label>Choose visibility:</Form.Label>
               </Col>
               <Col sm="8" md="6">
-                <Form.Select onChange="handleVisibility">
-                  <option selected value="0">
-                    Private
-                  </option>
-                  <option value="1">Public</option>
+                <Form.Select
+                  defaultValue={this.state.visibility}
+                  onChange={(e) => this.handleVisibility(e)}
+                >
+                  <option value="0">Private</option>
+                  <option value="1">Public View</option>
+                  <option value="2">Public Edition</option>
                 </Form.Select>
               </Col>
             </Row>
-            <Button className="mt-2" variant="primary" onClick={this.saveNote}>
+            <Button
+              disabled={this.state.text.length === 0}
+              className="mt-2"
+              variant="primary"
+              onClick={this.saveNote}
+            >
               Save
             </Button>
+            <Row>
+              <Form.Label className={this.state.messageClass}>
+                {" "}
+                {this.state.message}
+              </Form.Label>
+            </Row>
           </Form>
         </Col>
       </Row>

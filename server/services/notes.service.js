@@ -9,7 +9,7 @@ exports.find = async () => {
 
 exports.insert = async (req, res) => {
 
-    let note = {text: req.body.text};
+    let note = {text: req.body.text, visibility: req.body.visibility, creationDate: Date()};
     
     let results = await dao.insert(note);
 
