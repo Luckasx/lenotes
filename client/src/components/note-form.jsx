@@ -9,6 +9,7 @@ export default class NoteForm extends React.Component {
       visibility: 0,
       message: "",
       messageClass: "",
+      rows: 3
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -25,16 +26,36 @@ export default class NoteForm extends React.Component {
   handleChange(event) {
     this.setState({
       text: event.target.value,
+      rows: this.getRowsNumber(event.target.value)
     });
+  }
+  
+  getRowsNumber(text){
+    if(text.length <= 100){
+      return 4;
+    }
+
+    if(text.length <= 500){
+      return 10;
+    }
+
+    if(text.length <= 1000){
+      return 20;
+    }
+
+    return 25;
+
   }
 
   saveNote = async () => {
     console.log(this.state.text);
 
+    let texttoupload = await this.prepareNote();
+
     let response = await fetch("/api/notes", {
       method: "POST",
       body: JSON.stringify({
-        text: this.state.text,
+        text: texttoupload,
         visibility: this.state.visibility,
       }),
       // Adding headers to the request
@@ -46,6 +67,20 @@ export default class NoteForm extends React.Component {
     this.showFeedbackCreation(response);
    
   };
+
+  prepareNote = async () => {
+
+    let temp = this.state.text;
+
+    temp = this.replaceNewLines(temp)
+
+    return temp;
+
+  }
+
+  replaceNewLines (text){
+    return text.replace(/\r\n/g,"<br />").replace(/\n/g, "<br />");
+  }
 
   showFeedbackCreation = async (res ) => {
 
@@ -81,7 +116,7 @@ export default class NoteForm extends React.Component {
                 <Form.Label>Type a New Note</Form.Label>
                 <Form.Control
                   as="textarea"
-                  rows={3}
+                  rows={this.state.rows}
                   value={this.state.text}
                   onChange={this.handleChange}
                 />
