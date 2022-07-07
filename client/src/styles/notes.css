@@ -12,3 +12,33 @@
     justify-content: center;
     align-items: center;
 }
+
+.s-color{
+    content: ' ';
+    width: 20px;
+    height: 20px;
+    border: 1px solid lightgray ;
+    display: inline-block;
+}
+
+.color-picker .s-color .btn, .color-picker .s-color  .btn-primary{
+    background-color: transparent;
+    padding: 0px;
+    border-color: transparent;
+}
+
+.s-white{
+    background-color: white;
+}
+
+.s-coral{
+    background-color: coral;
+}
+
+.s-navy{
+    background-color: navy;
+}
+
+.s-yellow{
+    background-color: lightgoldenrodyellow;
+}

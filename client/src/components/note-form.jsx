@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
+import ColorPicker from './color-picker'
 
 export default class NoteForm extends React.Component {
   constructor(props) {
@@ -124,7 +125,7 @@ export default class NoteForm extends React.Component {
             </Row>
             <Row className="mt-1 align-items-center ">
               <Col sm="4" md="3">
-                <Form.Label>Choose visibility:</Form.Label>
+                <Form.Label>Visibility:</Form.Label>
               </Col>
               <Col sm="8" md="6">
                 <Form.Select
@@ -136,6 +137,9 @@ export default class NoteForm extends React.Component {
                   <option value="2">Public Edition</option>
                 </Form.Select>
               </Col>
+            </Row>
+            <Row>
+            <ColorPicker />
             </Row>
             <Button
               disabled={this.state.text.length === 0}
