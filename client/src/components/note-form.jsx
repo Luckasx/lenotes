@@ -10,12 +10,20 @@ export default class NoteForm extends React.Component {
       visibility: 0,
       message: "",
       messageClass: "",
-      rows: 3
+      rows: 3,
+      backcolor: "s-white"
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.saveNote = this.saveNote.bind(this);
     this.handleVisibility = this.handleVisibility.bind(this);
+    this.handleColor = this.handleColor.bind(this);
+  }
+
+  handleColor(color){
+    this.setState({
+      backcolor: color,
+    });
   }
 
   handleVisibility(event) {
@@ -112,7 +120,7 @@ export default class NoteForm extends React.Component {
       <Row>
         <Col sm="12" md="4">
           <Form>
-            <Row>
+            <Row className="row-textarea-note">
               <Col>
                 <Form.Label>Type a New Note</Form.Label>
                 <Form.Control
@@ -120,6 +128,7 @@ export default class NoteForm extends React.Component {
                   rows={this.state.rows}
                   value={this.state.text}
                   onChange={this.handleChange}
+                  className={this.state.backcolor + " input-textarea-note"}
                 />
               </Col>
             </Row>
@@ -139,7 +148,7 @@ export default class NoteForm extends React.Component {
               </Col>
             </Row>
             <Row>
-            <ColorPicker />
+            <ColorPicker selectedColor={this.handleColor} />
             </Row>
             <Button
               disabled={this.state.text.length === 0}

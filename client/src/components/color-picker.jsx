@@ -6,27 +6,38 @@ export default class ColorPicker extends React.Component {
     super(props);
     this.state = {
       colors: ["s-white", "s-coral", "s-navy", "s-yellow"],
-      selected: "s-white"
+      selected: "s-white",
     };
+
+    this.selectColor = this.selectColor.bind(this);
+  }
+
+  selectColor(val) {
+    this.setState({
+      selected: val,
+    });
+
+    this.props.selectedColor(val)
   }
 
   render() {
     return (
       <div
         id="color-picker"
-        className="color-picker d-flex  aligns-items-center justify-content-center"
+        className="color-picker d-flex  aligns-items-center justify-content-center mt-1"
       >
         <span className="me-2">Color:</span>
-        {this.state.colors.map((el) => (
-          <ButtonGroup className={el + " s-color me-2 mb-2 mt-1"}>
-            <ToggleButton
+        <div>
+          {this.state.colors.map((el) => (
+            <div
               value={el}
-              checked={this.state.selected === el}
-              className={el + " s-color"}
-              
-            ></ToggleButton>
-          </ButtonGroup>
-        ))}
+              type="radio"
+              name="radio-color"              
+              className={`${el} + " s-color ms-2 ${this.state.selected === el ? "color-selected" : ""}`}
+              onClick={(e) => this.selectColor(el)}
+            ></div>
+          ))}
+        </div>
       </div>
     );
   }

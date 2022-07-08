@@ -1,7 +1,7 @@
 import React from "react";
 import parse from "html-react-parser";
 import { Row, Col } from "react-bootstrap";
-import "./../styles/notes.css";
+
 
 class Notes extends React.Component {
   constructor(props) {

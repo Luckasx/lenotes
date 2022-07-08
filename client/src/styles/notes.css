@@ -13,18 +13,30 @@
     align-items: center;
 }
 
+
+/* .row-textarea-note .form-control{
+    background-color: transparent;
+} */
+
 .s-color{
     content: ' ';
     width: 20px;
     height: 20px;
     border: 1px solid lightgray ;
     display: inline-block;
+    cursor: pointer;
 }
 
-.color-picker .s-color .btn, .color-picker .s-color  .btn-primary{
+.color-picker .btn-check, .color-picker .btn-primary{
     background-color: transparent;
     padding: 0px;
     border-color: transparent;
+}
+
+.color-selected{
+    border: 3px solid lightgray;
+    width:21px;
+    height: 21px;
 }
 
 .s-white{
