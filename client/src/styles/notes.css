@@ -18,6 +18,14 @@
     background-color: transparent;
 } */
 
+.input-textarea-note{
+    
+    min-height: 100px;
+    border: 1px solid lightgray;
+
+
+}
+
 .s-color{
     content: ' ';
     width: 20px;

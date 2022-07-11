@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import ColorPicker from './color-picker'
+import ColorPicker from './color-picker';
+import NoteInput from "./note-input";
 
 export default class NoteForm extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export default class NoteForm extends React.Component {
       backcolor: "s-white"
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    
     this.saveNote = this.saveNote.bind(this);
     this.handleVisibility = this.handleVisibility.bind(this);
     this.handleColor = this.handleColor.bind(this);
@@ -32,12 +33,7 @@ export default class NoteForm extends React.Component {
     });
   }
 
-  handleChange(event) {
-    this.setState({
-      text: event.target.value,
-      rows: this.getRowsNumber(event.target.value)
-    });
-  }
+  
   
   getRowsNumber(text){
     if(text.length <= 100){
@@ -123,13 +119,7 @@ export default class NoteForm extends React.Component {
             <Row className="row-textarea-note">
               <Col>
                 <Form.Label>Type a New Note</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={this.state.rows}
-                  value={this.state.text}
-                  onChange={this.handleChange}
-                  className={this.state.backcolor + " input-textarea-note"}
-                />
+                <NoteInput backcolor={this.state.backcolor} />
               </Col>
             </Row>
             <Row className="mt-1 align-items-center ">
