@@ -1,7 +1,11 @@
 // https://reactjs.org/docs/refs-and-the-dom.html#creating-refs
 // https://stackoverflow.com/questions/45306325/react-contenteditable-and-cursor-position
+//https://www.taniarascia.com/content-editable-elements-in-javascript-react/
 
 import React from "react";
+
+//https://stackoverflow.com/questions/55881397/react-how-to-maintain-caret-position-when-editing-contenteditable-div
+import CaretPositioning from "./../_helpers/EditCaretPositioning";
 
 export default class NoteInput extends React.Component {
   constructor(props) {
@@ -10,10 +14,10 @@ export default class NoteInput extends React.Component {
     this.state = {
       text: "",
       text_to_save: "",
-      selectingClass: "",
-      range: {},
-      afterFocus: [],
-      selection: {},
+      caretPosition: {
+        start: 0,
+        end: 0,
+      },
     };
 
     this.textareaEl = React.createRef();
@@ -24,10 +28,31 @@ export default class NoteInput extends React.Component {
 
   handlePaste(event) {
     event.preventDefault();
-    console.log("handlePaste", event.clipboardData.getData("text"));
 
-    this.textareaEl.current.textContent =  this.cleanHtml(this.state.text + event.clipboardData.getData("text"))
-    
+    document.execCommand("insertHTML", false, event.clipboardData.getData("text/html"));
+
+    this.updateText(this.state.text + event.clipboardData.getData("text"));
+
+    //this.textareaEl.current.textContent =  this.cleanHtml(this.state.text + event.clipboardData.getData("text"))
+  }
+
+  updateText(event, text) {
+    let savedCaretPosition = CaretPositioning.saveSelection(
+      event.currentTarget
+    );
+    this.setState(
+      {
+        text: this.cleanHtml(text),
+        caretPosition: savedCaretPosition,
+      },
+      () => {
+        //restore caret position(s)
+        CaretPositioning.restoreSelection(
+          document.getElementById("editable"),
+          this.state.caretPosition
+        );
+      }
+    );
   }
 
   handleChange(event) {
@@ -42,7 +67,8 @@ export default class NoteInput extends React.Component {
       return false;
     }
 
-    this.textareaEl.current.textContent = event.target.textContent;
+    this.updateText(event.target.innerHTML);
+
     
   }
 
@@ -51,36 +77,36 @@ export default class NoteInput extends React.Component {
 
     let temp = text;
 
-    tags.forEach((el) => {
-      let re = new RegExp(`<${el}\\s.*>`, "g");
-      temp = temp.replace(re, "");
-    });
-
+    //remove HTML space
     temp = temp.replace("&nbsp;", " ");
 
-    console.log("pós replace", temp);
+    //insert HTML space
+    temp = temp.replace(/(\r\n)|\n/g, "<br>");
+
+    tags.forEach((el) => {
+      let re = new RegExp(`</?${el}>`, "g");
+      temp = temp.replace(re, "");
+    });
 
     return temp;
   }
 
   render() {
     return (
-      <div>
-        <div
-          id="editable"
-          contentEditable={true}
-          className={
-            this.props.backcolor +
-            " input-textarea-note " +
-            this.state.selectingClass
-          }
-          ref={this.textareaEl}
-          tabIndex="0"
-          onPaste={this.handlePaste}
-          onChange={this.handleChange}
-          suppressContentEditableWarning={true}
-        ></div>
-      </div>
+      <div
+        className={
+          this.props.backcolor +
+          " input-textarea-note " +
+          this.state.selectingClass
+        }
+        id="editable"
+        contentEditable={true}
+        ref={this.textareaEl}
+        tabIndex="0"
+        onPaste={this.handlePaste}
+        onKeyUp={this.handleChange}
+        suppressContentEditableWarning={true}
+      ></div>
     );
   }
 }
