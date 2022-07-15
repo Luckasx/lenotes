@@ -113,7 +113,8 @@ export default class NoteForm extends React.Component {
 
   render() {
     return (
-      <Row>
+      <Row className="align-center">
+        <Col sm="0" md="4"></Col>
         <Col sm="12" md="4">
           <Form>
             <Row className="row-textarea-note">

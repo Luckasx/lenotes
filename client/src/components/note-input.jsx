@@ -24,14 +24,20 @@ export default class NoteInput extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handlePaste = this.handlePaste.bind(this);
+
+    this.parser = new DOMParser();
   }
 
   handlePaste(event) {
     event.preventDefault();
 
-    document.execCommand("insertHTML", false, event.clipboardData.getData("text/html"));
+    let tempor = this.state.text + this.cleanHtml(event.clipboardData.getData("text/html"));
 
-    this.updateText(this.state.text + event.clipboardData.getData("text"));
+    document.execCommand("insertHTML", false, tempor);
+
+    this.updateText(event, tempor);
+
+    
 
     //this.textareaEl.current.textContent =  this.cleanHtml(this.state.text + event.clipboardData.getData("text"))
   }
@@ -67,28 +73,34 @@ export default class NoteInput extends React.Component {
       return false;
     }
 
-    this.updateText(event.target.innerHTML);
-
-    
+    this.updateText(event, event.target.innerHTML);
   }
 
   cleanHtml(text) {
-    let tags = ["span", "div", "p", "script"];
+    let temp = "";
 
-    let temp = text;
+    let doc = this.parser.parseFromString(text, "text/html");
 
-    //remove HTML space
-    temp = temp.replace("&nbsp;", " ");
-
-    //insert HTML space
-    temp = temp.replace(/(\r\n)|\n/g, "<br>");
-
-    tags.forEach((el) => {
-      let re = new RegExp(`</?${el}>`, "g");
-      temp = temp.replace(re, "");
-    });
+    for (let i = 0; i < doc.childNodes.length; i++) {
+      temp += this.extractTextFromHTML(doc.childNodes[i]);
+    }
 
     return temp;
+  }
+
+  extractTextFromHTML(element) {
+    let tags = ["span", "div", "p", "script", "html", "body"];
+
+    //if it is a html comment, returns empty
+    if (element.nodeName == "#comment") {
+      return "";
+    }
+
+    if (tags.indexOf(element.tagName.toLowerCase()) > -1) {
+      return element.innerText;
+    }
+
+    return element;
   }
 
   render() {

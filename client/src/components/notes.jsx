@@ -37,7 +37,7 @@ class Notes extends React.Component {
     return (
       <Row>
         {this.props.knotes.map((note) => (
-          <Col sm={this.getNoteSize(note)} className="note-block px-2 m-1">
+          <Col key={note._id} sm={this.getNoteSize(note)} className="note-block px-2 m-1">
             <div className="note-content d-flex aligns-items-center justify-content-center ">
               {parse(note.text)}
             </div>

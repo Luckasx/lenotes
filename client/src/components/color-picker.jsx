@@ -31,6 +31,7 @@ export default class ColorPicker extends React.Component {
           {this.state.colors.map((el) => (
             <div
               value={el}
+              key={el}
               type="radio"
               name="radio-color"              
               className={`${el} + " s-color ms-2 ${this.state.selected === el ? "color-selected" : ""}`}
