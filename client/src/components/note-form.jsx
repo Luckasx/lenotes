@@ -1,6 +1,6 @@
 import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import ColorPicker from './color-picker';
+import ColorPicker from "./color-picker";
 import NoteInput from "./note-input";
 
 export default class NoteForm extends React.Component {
@@ -12,16 +12,17 @@ export default class NoteForm extends React.Component {
       message: "",
       messageClass: "",
       rows: 3,
-      backcolor: "s-white"
+      backcolor: "s-white",
     };
 
-    
     this.saveNote = this.saveNote.bind(this);
     this.handleVisibility = this.handleVisibility.bind(this);
     this.handleColor = this.handleColor.bind(this);
+    this.inputText = this.inputText.bind(this);
+    this.clearSaveMessage = this.clearSaveMessage.bind(this);
   }
 
-  handleColor(color){
+  handleColor(color) {
     this.setState({
       backcolor: color,
     });
@@ -33,23 +34,27 @@ export default class NoteForm extends React.Component {
     });
   }
 
-  
-  
-  getRowsNumber(text){
-    if(text.length <= 100){
+  //receives text from note-input component
+  inputText(text) {
+    this.setState({
+      text,
+    });
+  }
+
+  getRowsNumber(text) {
+    if (text.length <= 100) {
       return 4;
     }
 
-    if(text.length <= 500){
+    if (text.length <= 500) {
       return 10;
     }
 
-    if(text.length <= 1000){
+    if (text.length <= 1000) {
       return 20;
     }
 
     return 25;
-
   }
 
   saveNote = async () => {
@@ -62,6 +67,7 @@ export default class NoteForm extends React.Component {
       body: JSON.stringify({
         text: texttoupload,
         visibility: this.state.visibility,
+        backcolor: this.state.backcolor,
       }),
       // Adding headers to the request
       headers: {
@@ -70,35 +76,36 @@ export default class NoteForm extends React.Component {
     });
 
     this.showFeedbackCreation(response);
-   
   };
 
   prepareNote = async () => {
-
     let temp = this.state.text;
 
-    temp = this.replaceNewLines(temp)
+    temp = this.replaceNewLines(temp);
 
     return temp;
+  };
 
+  replaceNewLines(text) {
+    return text.replace(/\r\n/g, "<br />").replace(/\n/g, "<br />");
   }
 
-  replaceNewLines (text){
-    return text.replace(/\r\n/g,"<br />").replace(/\n/g, "<br />");
-  }
-
-  showFeedbackCreation = async (res ) => {
-
+  showFeedbackCreation = async (res) => {
     let expectedMessage = "Note Created.";
 
     let response = await res.json();
 
     if (response.msg === expectedMessage) {
-      this.setState({
-        text: "",
-        message: "Your note is saved",
-        messageClass: "text-success",
-      });
+      this.setState(
+        {
+          text: "",
+          message: "Your note is saved",
+          messageClass: "text-success",
+        },
+        function () {
+          this.clearSaveMessage();
+        }
+      );
     }
 
     if (response.msg !== expectedMessage) {
@@ -108,7 +115,17 @@ export default class NoteForm extends React.Component {
         messageClass: "text-danger",
       });
     }
+  };
 
+  //clears from screen the OK save message
+  clearSaveMessage() {
+    setTimeout(() => {
+      this.setState({
+        text: "",
+        message: "",
+        messageClass: "",
+      });
+    }, 3000);
   }
 
   render() {
@@ -120,7 +137,10 @@ export default class NoteForm extends React.Component {
             <Row className="row-textarea-note">
               <Col>
                 <Form.Label>Type a New Note</Form.Label>
-                <NoteInput backcolor={this.state.backcolor} />
+                <NoteInput
+                  backcolor={this.state.backcolor}
+                  inputText={this.inputText}
+                />
               </Col>
             </Row>
             <Row className="mt-1 align-items-center ">
@@ -139,7 +159,7 @@ export default class NoteForm extends React.Component {
               </Col>
             </Row>
             <Row>
-            <ColorPicker selectedColor={this.handleColor} />
+              <ColorPicker selectedColor={this.handleColor} />
             </Row>
             <Button
               disabled={this.state.text.length === 0}

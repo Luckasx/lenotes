@@ -28,7 +28,7 @@ exports.findNote = async () => {
   } catch (err) {
     console.log("err...." + err);
   } finally {
-    //await client.close();
+    
   }
 };
 
@@ -36,8 +36,7 @@ exports.insert = async (note) => {
   await client.connect();
   try {
     // query for movies that have a runtime less than 15 minutes
-    const query = {};
-
+    
     const result = await client
       .db("lenotes")
       .collection("Notes")

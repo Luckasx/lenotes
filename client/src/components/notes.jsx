@@ -2,7 +2,6 @@ import React from "react";
 import parse from "html-react-parser";
 import { Row, Col } from "react-bootstrap";
 
-
 class Notes extends React.Component {
   constructor(props) {
     super(props);
@@ -15,18 +14,16 @@ class Notes extends React.Component {
     this.setState({ name: newProps.notes });
   }
 
-  getNoteSize(note){
-
-    if(note.text.length <= 100){
+  getNoteSize(note) {
+    if (note.text.length <= 100) {
       return 2;
     }
 
-    if(note.text.length <= 200){
+    if (note.text.length <= 200) {
       return 3;
     }
 
     return 6;
-
   }
 
   render() {
@@ -35,15 +32,26 @@ class Notes extends React.Component {
     }
 
     return (
-      <Row>
+      <div>
         {this.props.knotes.map((note) => (
-          <Col key={note._id} sm={this.getNoteSize(note)} className="note-block px-2 m-1">
-            <div className="note-content d-flex aligns-items-center justify-content-center ">
-              {parse(note.text)}
-            </div>
-          </Col>
+          <Row className="d-flex justify-content-center">
+            <Col
+              key={note._id}
+              sm={this.getNoteSize(note)}
+              className=" m-1 mt-2"
+            >
+              <div
+                className={
+                  note.backcolor +
+                  " note-block note-content d-flex aligns-items-center justify-content-center "
+                }
+              >
+                {parse(note.text)}
+              </div>
+            </Col>
+          </Row>
         ))}
-      </Row>
+      </div>
     );
   }
 }

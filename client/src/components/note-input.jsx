@@ -57,7 +57,13 @@ export default class NoteInput extends React.Component {
           document.getElementById("editable"),
           this.state.caretPosition
         );
+
+        //send text data to parent component
+        this.props.inputText(this.state.text)
+
+
       }
+
     );
   }
 
