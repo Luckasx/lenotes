@@ -1,6 +1,7 @@
 import React from "react";
 import parse from "html-react-parser";
 import { Row, Col } from "react-bootstrap";
+import NoteFooter from "./note-footer";
 
 class Notes extends React.Component {
   constructor(props) {
@@ -40,13 +41,16 @@ class Notes extends React.Component {
               sm={this.getNoteSize(note)}
               className=" m-1 mt-2"
             >
-              <div
-                className={
-                  note.backcolor +
-                  " note-block note-content d-flex aligns-items-center justify-content-center "
-                }
-              >
-                {parse(note.text)}
+              <div>
+                <div
+                  className={
+                    note.backcolor +
+                    " note-block note-content d-flex aligns-items-center justify-content-center "
+                  }
+                >
+                  {parse(note.text)}
+                </div>
+                <NoteFooter note={note} />
               </div>
             </Col>
           </Row>
