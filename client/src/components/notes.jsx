@@ -4,16 +4,33 @@ import { Row, Col } from "react-bootstrap";
 import NoteFooter from "./note-footer";
 
 class Notes extends React.Component {
-  constructor(props) {
+
+  constructor(props){
     super(props);
     this.state = {
-      notes: [],
-    };
+      knotes:[]
+    }
   }
 
-  componentWillReceiveProps(newProps) {
-    this.setState({ name: newProps.notes });
+  async componentDidMount() {
+    
+    await this.getNotes()
+      .then((res) => {
+        this.setState({
+          notes: res,          
+        });
+      })
+      .catch((err) => console.log(err));
   }
+
+
+  getNotes = async () => {
+    const response = await fetch("/api/notes");
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  };
 
   getNoteSize(note) {
     if (note.text.length <= 100) {
@@ -28,16 +45,16 @@ class Notes extends React.Component {
   }
 
   render() {
-    if (this.props.knotes === undefined) {
+    if (this.state.knotes === undefined) {
       return <span>No notes =(</span>;
     }
 
     return (
       <div>
-        {this.props.knotes.map((note) => (
-          <Row className="d-flex justify-content-center">
+        {this.state.knotes.map((note) => (
+          <Row className="d-flex justify-content-center" key={note._id.substr(6)}>
             <Col
-              key={note._id}
+              
               sm={this.getNoteSize(note)}
               className=" m-1 mt-2"
             >
@@ -47,6 +64,7 @@ class Notes extends React.Component {
                     note.backcolor +
                     " note-block note-content d-flex aligns-items-center justify-content-center "
                   }
+                  
                 >
                   {parse(note.text)}
                 </div>

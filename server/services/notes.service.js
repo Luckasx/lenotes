@@ -1,9 +1,7 @@
 const dao = require("./../daos/notes.dao");
 
 exports.find = async () => {
-  let results = await dao.findNote();
-
-  return results;
+  return dao.findNote();
 };
 
 exports.insert = async (req) => {
@@ -14,7 +12,7 @@ exports.insert = async (req) => {
     creationDate: Date()
   };
 
-  let results = await dao.insert(note);
+  return  dao.insert(note);
 
-  return results;
+  
 };
