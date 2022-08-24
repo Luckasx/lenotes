@@ -1,7 +1,7 @@
 import React from "react";
 import parse from "html-react-parser";
 import { Row, Col } from "react-bootstrap";
-import NoteFooter from "./note-footer";
+import NoteFooter from "./NoteFooter";
 
 class Notes extends React.Component {
 
@@ -17,7 +17,7 @@ class Notes extends React.Component {
     await this.getNotes()
       .then((res) => {
         this.setState({
-          notes: res,          
+          knotes: res,          
         });
       })
       .catch((err) => console.log(err));

@@ -5,7 +5,7 @@
 import React from "react";
 
 //https://stackoverflow.com/questions/55881397/react-how-to-maintain-caret-position-when-editing-contenteditable-div
-import CaretPositioning from "./../_helpers/EditCaretPositioning";
+import CaretPositioning from "../_helpers/EditCaretPositioning";
 
 export default class NoteInput extends React.Component {
   constructor(props) {

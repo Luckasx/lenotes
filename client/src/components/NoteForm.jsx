@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import ColorPicker from "./color-picker";
-import NoteInput from "./note-input";
+import ColorPicker from "./ColorPicker";
+import NoteInput from "./NoteInput";
 
 export default class NoteForm extends React.Component {
   constructor(props) {

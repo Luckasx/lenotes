@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import Notes from "./components/notes";
-import NoteForm from "./components/note-form";
+import Notes from "./components/Notes";
+import NoteForm from "./components/NoteForm";
+import  LeNavBar from "./components/LeNavBar";
+
 
 import { v4 as uuid } from "uuid";
 
@@ -51,6 +53,7 @@ export default class App extends Component {
 
     return (
       <div className="App container-fluid">
+        <LeNavBar />
         <p className="App-intro">{this.state.response}</p>
         <div className="row">
           <NoteForm />
