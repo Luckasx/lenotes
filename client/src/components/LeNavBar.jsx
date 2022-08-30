@@ -1,20 +1,21 @@
 import React from "react";
-import { Row, Col, Navbar , Container} from "react-bootstrap";
+import { Row, Col, Nav, Navbar , Container} from "react-bootstrap";
+
 
 class LeNavBar extends React.Component {
   render() {
     return (
-      <Navbar>
+      <Navbar bg="light" expand="lg" fixed="top" className="notes-nav-bar">
         <Container>
           <Navbar.Brand href="#home">LE NOTES</Navbar.Brand>
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
-            <Navbar.Text>
+            <Nav.Link href="/signup">
               Sign up
-            </Navbar.Text>
-            <Navbar.Text class="ms-3">
+            </Nav.Link>
+            <Nav.Link className="ms-4" href="/signin">
               Sign in
-            </Navbar.Text>
+            </Nav.Link>
           </Navbar.Collapse>
         </Container>
       </Navbar>
