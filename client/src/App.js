@@ -4,7 +4,7 @@ import "./App.css";
 
 import { Routes, Route, Link } from "react-router-dom";
 import Home from './views/Home'
-import  LeNavBar from "./components/LeNavBar";
+import  Signup from './views/Signup'
 
 export default class App extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export default class App extends Component {
     return (
       <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="signup" element={<LeNavBar />} />
+      <Route path="signup" element={<Signup />} />
     </Routes>
     );
   }
