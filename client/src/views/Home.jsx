@@ -7,6 +7,7 @@ import  LeNavBar from "../components/LeNavBar";
 
 
 import { v4 as uuid } from "uuid";
+import { Row } from "react-bootstrap";
 
 export default class App extends Component {
   constructor(props) {
@@ -53,8 +54,12 @@ export default class App extends Component {
 
     return (
       <div className="App container-fluid">
+        <Row>
         <LeNavBar />
+        </Row>
+        <Row className="mt-4">
         <p className="App-intro">{this.state.response}</p>
+        </Row>
         <div className="row">
           <NoteForm />
         </div>
