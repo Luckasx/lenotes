@@ -2,6 +2,8 @@ import {React, useState} from "react";
 import { useForm  } from "react-hook-form";
 import { Row, Col, Form, Button } from "react-bootstrap";
 
+//https://upmostly.com/tutorials/the-disabled-attribute-in-react-buttons
+
 export default function SignUpForm() {
   const { register, handleSubmit } = useForm();
   const onSubmit = (data) => console.log(data);
