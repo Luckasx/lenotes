@@ -2,9 +2,16 @@ import React, { Component } from "react";
 
 import LeNavBar from "../components/LeNavBar";
 
+
+
 import { Row, Col, Form, Button } from "react-bootstrap";
+import SignUpForm from "../components/SignUpForm";
+
+
 
 export default class Signup extends Component {
+
+  
 
   constructor() {
     super();
@@ -18,6 +25,8 @@ export default class Signup extends Component {
   }
 
   render() {
+
+
     return (
       <div className="App container-fluid">
         <Row className="nav-bar-mb">
@@ -25,10 +34,10 @@ export default class Signup extends Component {
         </Row>
         <Row className="form-signup">
           <Col lg={{span: 2, offset:5}} md={{span: 6, offset:3}} sm={{span: 4, offset:4}}>
-            <Form>
+            {/* <Form>
               <Form.Group className="mb-3" controlId="formBasicUsername">
                 <Form.Label>Username</Form.Label>
-                <Form.Control type="text" placeholder="Choose your username" />
+                <Form.Control type="text" placeholder="Choose your username" {...register("firstName", { required: true, maxLength: 20 })} />
                 <Form.Text className="text-muted">                  
                 </Form.Text>
               </Form.Group>
@@ -58,7 +67,8 @@ export default class Signup extends Component {
               <Button variant="primary" type="submit" disabled={!this.state.checkboxChecked}>
                 Submit
               </Button>
-            </Form>
+            </Form> */}
+            <SignUpForm></SignUpForm>
           </Col>
         </Row>
       </div>
