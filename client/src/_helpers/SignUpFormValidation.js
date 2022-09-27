@@ -13,3 +13,7 @@ exports.validatePassword = (password) => {
     //   )    
 
 };
+
+exports.validateUsername = (username) => {
+    return /^[-_]*[a-z0-9]+[-_]*[a-z0-9_-]*$/i.test(username)    
+}
