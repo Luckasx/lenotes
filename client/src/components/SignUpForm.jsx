@@ -2,15 +2,19 @@ import { React, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
 
-import { validatePassword, validateUsername } from "./../_helpers/SignUpFormValidation";
+import {
+  validatePassword,
+  validateUsername,
+} from "./../_helpers/SignUpFormValidation";
 
 //https://upmostly.com/tutorials/the-disabled-attribute-in-react-buttons
 
 export default function SignUpForm() {
   const {
     register,
-    formState: { errors },
+    formState: { errors, touchedFields },
     handleSubmit,
+    getValues,
   } = useForm();
   const onSubmit = (data) => console.log(data);
 
@@ -35,7 +39,7 @@ export default function SignUpForm() {
               value: 20,
               message: "The username must contain 6 to 20 characters",
             },
-            validate: validateUsername
+            validate: validateUsername,
           })}
           type="text"
           autoComplete="off"
@@ -46,7 +50,8 @@ export default function SignUpForm() {
         <div className="text-danger">
           {errors.username && errors.username?.type === "validate" && (
             <span>
-              Your username may have only alphanumerical characters. You may also include _ and -.
+              Your username may have only alphanumerical characters. You may
+              also include _ and -.
             </span>
           )}
         </div>
@@ -83,17 +88,55 @@ export default function SignUpForm() {
               value: 20,
               message: "The password must contain 8 to 20 characters.",
             },
-            validate: validatePassword,
+            validate: {
+              complete: validatePassword,
+              //upper: (v) => /(?=.*[A-Z])/.test(v),
+            },
           })}
         />
         <p className="text-danger">{errors.password?.message}</p>
-        <div className="text-danger">
-          {errors.password && errors.password?.type === "validate" && (
-            <span>
-              Your password should mix at least one digit, one uppercase letter,
-              one lowercase letter and one special character.
-            </span>
-          )}
+        <div>
+          {
+            <div>
+              <span
+                className={`me-1  ${
+                  /(?=.*[A-Z])/.test(getValues("password"))
+                    ? "text-success"
+                    : "text-danger"
+                } `}
+              >
+                A-Z
+              </span>
+              <span
+                className={`me-1  ${
+                  /(?=.*[a-z])/.test(getValues("password"))
+                    ? "text-success"
+                    : "text-danger"
+                } `}
+              >
+                a-z
+              </span>
+              <span
+                className={`me-1  ${
+                  /(?=.*[0-9])/.test(getValues("password"))
+                    ? "text-success"
+                    : "text-danger"
+                } `}
+              >
+                0-9
+              </span>
+              <span
+                className={`me-1  ${
+                  /(?=.*[\W])/.test(getValues("password"))
+                    ? "text-success"
+                    : "text-danger"
+                } `}
+              >
+                Special Characters
+              </span>
+            </div>
+          }
+         
         </div>
       </Form.Group>
       <Form.Group className="mb-3" controlid="formBasicPasswordRepeat">
