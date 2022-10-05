@@ -94,54 +94,75 @@ export default function SignUpForm() {
             },
           })}
         />
-        <p className="text-danger">{errors.password?.message}</p>
-        <div>
-          {
+        {errors.password && (
+          <div>
+            <p className="text-danger">{errors.password?.message}</p>
             <div>
-              <span
-                className={`me-1  ${
-                  /(?=.*[A-Z])/.test(getValues("password"))
-                    ? "text-success"
-                    : "text-danger"
-                } `}
-              >
-                A-Z
-              </span>
-              <span
-                className={`me-1  ${
-                  /(?=.*[a-z])/.test(getValues("password"))
-                    ? "text-success"
-                    : "text-danger"
-                } `}
-              >
-                a-z
-              </span>
-              <span
-                className={`me-1  ${
-                  /(?=.*[0-9])/.test(getValues("password"))
-                    ? "text-success"
-                    : "text-danger"
-                } `}
-              >
-                0-9
-              </span>
-              <span
-                className={`me-1  ${
-                  /(?=.*[\W])/.test(getValues("password"))
-                    ? "text-success"
-                    : "text-danger"
-                } `}
-              >
-                Special Characters
-              </span>
+              {
+                <div>
+                  <span
+                    className={`me-1  ${
+                      /(?=.*[A-Z])/.test(getValues("password"))
+                        ? "text-success"
+                        : "text-danger"
+                    } `}
+                  >
+                    A-Z
+                  </span>
+                  <span
+                    className={`me-1  ${
+                      /(?=.*[a-z])/.test(getValues("password"))
+                        ? "text-success"
+                        : "text-danger"
+                    } `}
+                  >
+                    a-z
+                  </span>
+                  <span
+                    className={`me-1  ${
+                      /(?=.*[0-9])/.test(getValues("password"))
+                        ? "text-success"
+                        : "text-danger"
+                    } `}
+                  >
+                    0-9
+                  </span>
+                  <span
+                    className={`me-1  ${
+                      /(?=.*[\W])/.test(getValues("password"))
+                        ? "text-success"
+                        : "text-danger"
+                    } `}
+                  >
+                    Special Characters
+                  </span>
+                </div>
+              }
             </div>
-          }
-         
-        </div>
+          </div>
+        )}
       </Form.Group>
       <Form.Group className="mb-3" controlid="formBasicPasswordRepeat">
         <Form.Label>Repeat Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
+        <Form.Control
+          type="password"
+          placeholder="Password"
+          {...register("rpassword", {
+            required: "You must confirm your password",
+            validate: {
+              repeat: (v) => v === getValues("password"),
+            },
+          })}
+        />
+
+        <div className="text-danger">
+          {errors.rpassword && errors.rpassword?.type === "validate" && (
+            <span>
+              Your password doesn't match.
+            </span>
+          )}
+        </div>
+
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Check
