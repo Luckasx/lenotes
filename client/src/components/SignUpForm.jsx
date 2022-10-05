@@ -2,17 +2,12 @@ import { React, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
 
-import {
-  validatePassword,
-  validateUsername,
-} from "./../_helpers/SignUpFormValidation";
-
 //https://upmostly.com/tutorials/the-disabled-attribute-in-react-buttons
 
 export default function SignUpForm() {
   const {
     register,
-    formState: { errors, touchedFields },
+    formState: { errors },
     handleSubmit,
     getValues,
   } = useForm();
@@ -39,7 +34,7 @@ export default function SignUpForm() {
               value: 20,
               message: "The username must contain 6 to 20 characters",
             },
-            validate: validateUsername,
+            validate: v => /^[-_]*[a-z0-9]+[-_]*[a-z0-9_-]*$/i.test(v),
           })}
           type="text"
           autoComplete="off"
@@ -89,7 +84,7 @@ export default function SignUpForm() {
               message: "The password must contain 8 to 20 characters.",
             },
             validate: {
-              complete: validatePassword,
+              complete: v =>  /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{6,120})/.test(v)   
               //upper: (v) => /(?=.*[A-Z])/.test(v),
             },
           })}
@@ -120,7 +115,7 @@ export default function SignUpForm() {
                   </span>
                   <span
                     className={`me-1  ${
-                      /(?=.*[0-9])/.test(getValues("password"))
+                      /(?=.*\d)/.test(getValues("password"))
                         ? "text-success"
                         : "text-danger"
                     } `}
@@ -129,7 +124,7 @@ export default function SignUpForm() {
                   </span>
                   <span
                     className={`me-1  ${
-                      /(?=.*[\W])/.test(getValues("password"))
+                      /(?=.*\W)/.test(getValues("password"))
                         ? "text-success"
                         : "text-danger"
                     } `}
@@ -156,9 +151,9 @@ export default function SignUpForm() {
         />
 
         <div className="text-danger">
-          {errors.rpassword && errors.rpassword?.type === "validate" && (
+          {errors.rpassword && errors.rpassword?.type === "repeat" && (
             <span>
-              Your password doesn't match.
+              Your passwords don't match.
             </span>
           )}
         </div>
