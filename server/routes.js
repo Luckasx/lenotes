@@ -3,8 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const notesRouter = require("./routes/notes.routes")
-
-// const cookieParser = require('cookie-parser');
+const userRouter = require('./routes/user.routes')
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -22,5 +21,7 @@ app.get('/mensagem', (req, res) => {
 });
 
 app.use("/notes", notesRouter)
+
+app.use("/user", userRouter)
 
 module.exports = app;

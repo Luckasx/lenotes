@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
 const notesController = require("../controllers/notes.controller")
 
 app.use(express.json());

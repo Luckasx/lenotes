@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
+import axios from "axios";
 
 //https://upmostly.com/tutorials/the-disabled-attribute-in-react-buttons
 
@@ -11,7 +12,11 @@ export default function SignUpForm() {
     handleSubmit,
     getValues,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+
+  const onSubmit = (data) => {
+    console.log(data);
+    axios.post("api/user", { data }).then((res) => console.log(res));
+  };
 
   const [checkboxChecked, setChecked] = useState(false);
 
@@ -34,7 +39,7 @@ export default function SignUpForm() {
               value: 20,
               message: "The username must contain 6 to 20 characters",
             },
-            validate: v => /^[-_]*[a-z0-9]+[-_]*[a-z0-9_-]*$/i.test(v),
+            validate: (v) => /^[-_]*[a-z0-9]+[-_]*[a-z0-9_-]*$/i.test(v),
           })}
           type="text"
           autoComplete="off"
@@ -84,7 +89,8 @@ export default function SignUpForm() {
               message: "The password must contain 8 to 20 characters.",
             },
             validate: {
-              complete: v =>  /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{6,120})/.test(v)   
+              complete: (v) =>
+                /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{6,120})/.test(v),
               //upper: (v) => /(?=.*[A-Z])/.test(v),
             },
           })}
@@ -152,12 +158,9 @@ export default function SignUpForm() {
 
         <div className="text-danger">
           {errors.rpassword && errors.rpassword?.type === "repeat" && (
-            <span>
-              Your passwords don't match.
-            </span>
+            <span>Your passwords don't match.</span>
           )}
         </div>
-
       </Form.Group>
       <Form.Group className="mb-3">
         <Form.Check
