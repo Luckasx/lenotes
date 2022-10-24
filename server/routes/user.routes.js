@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-//const notesController = require("../controllers/notes.controller")
+const usersController = require("../controllers/users.controller")
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -9,9 +9,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post("/", async (req, res) => {
 
-    console.log(req.body);
+    let result = await usersController.create(req.body.data)
 
-    res.json('{msg: "req processed on server"}').send();
+    res.status(result.status || 200).json(result).send();
 });
 
 module.exports = app;
