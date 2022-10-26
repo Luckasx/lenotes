@@ -4,6 +4,8 @@ const hasher = require("./../_helpers/hasher")
 
 exports.create = async (user) => {
 
+  delete user.rpassword;
+
   user.password = await hasher.hash(user.password);
 
   return dao.create(user);
