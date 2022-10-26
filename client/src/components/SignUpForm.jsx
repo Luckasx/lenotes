@@ -13,6 +13,8 @@ export default function SignUpForm() {
     getValues,
   } = useForm();
 
+  const newuservalidate = require("./../_helpers/newuser.validate")
+
   const onSubmit = (data) => {
     console.log(data);
     axios.post("api/user", { data }).then((res) => console.log(res));
@@ -39,7 +41,11 @@ export default function SignUpForm() {
               value: 20,
               message: "The username must contain 6 to 20 characters",
             },
-            validate: (v) => /^[-_]*[a-z0-9]+[-_]*[a-z0-9_-]*$/i.test(v),
+            validate: {
+              rules: (v) => /^[-_]*[a-z0-9]+[-_]*[a-z0-9_-]*$/i.test(v),
+              nonexisting :  (v) => newuservalidate.validateExistingUser(v)
+              
+            }
           })}
           type="text"
           autoComplete="off"

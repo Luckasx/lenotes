@@ -5,3 +5,9 @@ exports.create = async (user) => {
 
     return results;
 }
+
+exports.get = async(username) => {
+    let results = await service.get(username);
+
+    return results;
+}

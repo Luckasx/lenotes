@@ -27,9 +27,7 @@ exports.findNote = async () => {
     }
   } catch (err) {
     console.log("err...." + err);
-  } finally {
-    
-  }
+  } 
 };
 
 exports.insert = async (note) => {

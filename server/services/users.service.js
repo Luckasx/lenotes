@@ -10,3 +10,9 @@ exports.create = async (user) => {
 
   return dao.create(user);
 };
+
+exports.get = async(username) => {
+  let results = await dao.get(username);
+
+  return results;
+}
