@@ -8,17 +8,7 @@ const saltRounds = 10;
 
 exports.hash = async (password) => {
   try {
-    return await bcrypt.genSalt(saltRounds, async function (err, salt) {
-      if (err) {
-        console.log(err);
-      }
-      let x = await bcrypt.hash(password, salt, function (err, hash) {
-        // returns hash
-        return hash;
-      });
-
-      return x;
-    });
+    return bcrypt.hash(password, saltRounds);    
   } catch (err) {
     console.log(err);
   }
