@@ -8,12 +8,12 @@ exports.get = async (username) => {
   await client.connect();
   try {
     // query for movies that have a runtime less than 15 minutes
-    const query = {username: username};
+    const query = { username: username };
 
     const result = await client
       .db("lenotes")
       .collection("Users")
-      .find(query)
+      .find(query).project( { username: 1, _id: 0 })
       .toArray();
 
     if (result) {

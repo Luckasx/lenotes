@@ -11,7 +11,7 @@ app.get("/:username", async(req, res) => {
 
     let result = await usersController.get(req.params.username)
 
-    res.status(result.status || 200).json(result).send();
+    res.status(result.status || 200).json(result);
 
 });
 
@@ -19,7 +19,7 @@ app.post("/", async (req, res) => {
 
     let result = await usersController.create(req.body.data)
 
-    res.status(result.status || 200).json(result).send();
+    res.status(result.status || 200).json(result);
 });
 
 module.exports = app;

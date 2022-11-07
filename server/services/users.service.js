@@ -8,6 +8,8 @@ exports.create = async (user) => {
 
   user.password = await hasher.hash(user.password);
 
+  user.creation_date = await new Date();
+
   return dao.create(user);
 };
 
