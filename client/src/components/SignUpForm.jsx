@@ -41,23 +41,23 @@ export default function SignUpForm() {
               value: 20,
               message: "The username must contain 6 to 20 characters",
             },
-            validate: {
-              rules: (v) => /^[-_]*[a-z0-9]+[-_]*[a-z0-9_-]*$/i.test(v),
-              nonexisting :  (v) => newuservalidate.validateExistingUser(v)
-              
+            pattern:{
+              value: (v) => /^[-_]*[a-z0-9]+[-_]*[a-z0-9_-]*$/i.test(v),
+              message: 'Your username may have only alphanumerical characters. You may also include _ and -.'
+            },
+            validate: {              
+              nonexisting : async (v) => await newuservalidate.validateExistingUser(v) === true || 'This username is already taken, please type another one.'                          
             }
           })}
           type="text"
           autoComplete="off"
           placeholder="Choose your username"
         />
-        <p className="text-danger">{errors.username?.message}</p>
-
         <div className="text-danger">
-          {errors.username && errors.username?.type === "validate" && (
+          {errors.username && (
             <span>
-              Your username may have only alphanumerical characters. You may
-              also include _ and -.
+              {console.log(errors)}
+              {errors.username.message}             
             </span>
           )}
         </div>

@@ -2,7 +2,9 @@ import axios from "axios";
 
 export const validateExistingUser = async (v) => {
 
-    await axios.get(`api/user/${v}`)
+    let res = (await axios.get(`api/user/${v}`)).data;
 
-    return false;
+    console.log("new user?", res.length === 0);
+
+    return res.length === 0;
 }
