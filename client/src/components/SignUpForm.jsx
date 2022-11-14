@@ -13,18 +13,33 @@ export default function SignUpForm() {
     getValues,
   } = useForm();
 
-  const newuservalidate = require("./../_helpers/newuser.validate")
+  const [checkboxChecked, setChecked] = useState(false);
+  const [userRegistered, setRegistered] = useState(false);
+
+  const newuservalidate = require("./../_helpers/newuser.validate");
 
   const onSubmit = (data) => {
     console.log(data);
-    axios.post("api/user", { data }).then((res) => console.log(res));
+    axios.post("api/user", { data }).then((res) => {
+      if (res.data.msg === "User Created.") {
+        setRegistered(true);
+      }
+      console.log(res);
+    });
   };
-
-  const [checkboxChecked, setChecked] = useState(false);
 
   const handleChange = (evt) => {
     setChecked(evt.target.checked);
   };
+
+  if (userRegistered) {
+    return (
+      <div>
+        <h3>User created with success!</h3>
+        <Button variant="link" href="signin">Sign In</Button>
+      </div>
+    );
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -41,25 +56,23 @@ export default function SignUpForm() {
               value: 20,
               message: "The username must contain 6 to 20 characters",
             },
-            pattern:{
+            pattern: {
               value: (v) => /^[-_]*[a-z0-9]+[-_]*[a-z0-9_-]*$/i.test(v),
-              message: 'Your username may have only alphanumerical characters. You may also include _ and -.'
+              message:
+                "Your username may have only alphanumerical characters. You may also include _ and -.",
             },
-            validate: {              
-              nonexisting : async (v) => await newuservalidate.validateExistingUser(v) === true || 'This username is already taken, please type another one.'                          
-            }
+            validate: {
+              nonexisting: async (v) =>
+                (await newuservalidate.validateExistingUser(v)) === true ||
+                "This username is already taken, please type another one.",
+            },
           })}
           type="text"
           autoComplete="off"
           placeholder="Choose your username"
         />
         <div className="text-danger">
-          {errors.username && (
-            <span>
-              {console.log(errors)}
-              {errors.username.message}             
-            </span>
-          )}
+          {errors.username && <span>{errors.username.message}</span>}
         </div>
 
         <Form.Text className="text-muted"></Form.Text>
