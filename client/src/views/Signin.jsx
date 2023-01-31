@@ -5,24 +5,19 @@ import LeNavBar from "../components/LeNavBar";
 
 
 import { Row, Col } from "react-bootstrap";
-import SignUpForm from "../components/SignUpForm";
+import SignInForm from "../components/SignInForm";
 
 
 
-export default class Signup extends Component {
+export default class Signin extends Component {
 
   
 
   constructor() {
     super();
-    this.state = { checkboxChecked: false };
-    this.handleChange = this.handleChange.bind(this);
+    this.state = { checkboxChecked: false };    
   }
 
-
-  handleChange(evt) {
-    this.setState({ checkboxChecked: evt.target.checked });
-  }
 
   render() {
 
@@ -32,9 +27,9 @@ export default class Signup extends Component {
         <Row className="nav-bar-mb">
           <LeNavBar />
         </Row>
-        <Row className="form-signup">
+        <Row className="form-signin">
           <Col lg={{span: 4, offset:4}} md={{span: 6, offset:3}} sm={{span: 4, offset:4}}>         
-            <SignUpForm></SignUpForm>
+            <SignInForm></SignInForm>
           </Col>
         </Row>
       </div>

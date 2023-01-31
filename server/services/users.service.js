@@ -18,3 +18,9 @@ exports.get = async(username) => {
 
   return results;
 }
+
+exports.login = async(data) => {
+  let results = await dao.login(data);
+
+  return results;
+}

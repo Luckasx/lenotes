@@ -22,4 +22,11 @@ app.post("/", async (req, res) => {
     res.status(result.status || 200).json(result);
 });
 
+app.post("/login", async (req, res) => {
+
+    let result = await usersController.login(req.body.data)
+
+    res.status(result.status || 200).json(result);
+});
+
 module.exports = app;

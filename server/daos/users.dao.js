@@ -65,3 +65,47 @@ exports.create = async (user) => {
     await client.close();
   }
 };
+
+exports.login = async(data) => {
+
+
+    await client.connect();
+
+    try {
+      // query for movies that have a runtime less than 15 minutes
+      const query = { username: data };
+  
+      const result = await client
+        .db("lenotes")
+        .collection("Users")
+        .find(query).project( { username: 1, _id: 0 })
+        .toArray();
+
+        if (result) {
+          console.log(result);
+          return { msg: "Sign in ok." };
+        } else {
+          console.log(`No user found with the name ..`);
+          return [];
+        }
+    }
+   catch (err) {
+    switch (err.code) {
+      case 11000:
+        return {
+          msg: "Username exists already please choose another one.",
+          status: 409,
+        };
+      default:
+        return {
+          msg: "There is a problem on the server. Please try again in a few momements.",
+          status: 503,
+        };
+    }
+  } finally {
+    await client.close();
+  }
+
+
+  return results;
+}

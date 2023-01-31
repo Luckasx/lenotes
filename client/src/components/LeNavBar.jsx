@@ -11,7 +11,7 @@ class LeNavBar extends React.Component {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Nav.Link href="/signup">
-              Sign up
+              Get Access
             </Nav.Link>
             <Nav.Link className="ms-4" href="/signin">
               Sign in
