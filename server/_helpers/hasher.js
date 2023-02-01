@@ -9,9 +9,15 @@ const saltRounds = 12;
 
 exports.hash = async (password) => {
   try {
-    return bcrypt.hash(password, saltRounds);    
+    return bcrypt.hash(password, saltRounds);
   } catch (err) {
     console.log(err);
-    throw(err);
+    throw err;
   }
+};
+
+//results comes from DB
+//data comes from http req
+exports.compare = async (results, data) => {
+  return await bcrypt.compare(data.password, results.password);
 };

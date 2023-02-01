@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 
 const client = new MongoClient(
-  `mongodb://${process.env.MONGO_ADMIN}:${process.env.MONGO_PWD}@${process.env.MONGO_ADDRESS}:${process.env.MONGO_PORT}`
+  `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_ADDRESS}:${process.env.MONGO_PORT}`
 );
 
 //@TODO

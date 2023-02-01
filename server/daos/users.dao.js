@@ -1,7 +1,7 @@
 const { MongoClient } = require("mongodb");
 
 const client = new MongoClient(
-  `mongodb://${process.env.MONGO_ADMIN}:${process.env.MONGO_PWD}@${process.env.MONGO_ADDRESS}:${process.env.MONGO_PORT}`
+  `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PWD}@${process.env.MONGO_ADDRESS}:${process.env.MONGO_PORT}`
 );
 
 exports.get = async (username) => {
@@ -13,7 +13,8 @@ exports.get = async (username) => {
     const result = await client
       .db("lenotes")
       .collection("Users")
-      .find(query).project( { username: 1, _id: 0 })
+      .find(query)
+      .project({ username: 1, _id: 0 })
       .toArray();
 
     if (result) {
@@ -66,30 +67,22 @@ exports.create = async (user) => {
   }
 };
 
-exports.login = async(data) => {
+exports.login = async (data) => {
+  await client.connect();
 
+  let result = [];
 
-    await client.connect();
+  try {
+    // query for movies that have a runtime less than 15 minutes
+    const query = { username: data.username };
 
-    try {
-      // query for movies that have a runtime less than 15 minutes
-      const query = { username: data };
-  
-      const result = await client
-        .db("lenotes")
-        .collection("Users")
-        .find(query).project( { username: 1, _id: 0 })
-        .toArray();
-
-        if (result) {
-          console.log(result);
-          return { msg: "Sign in ok." };
-        } else {
-          console.log(`No user found with the name ..`);
-          return [];
-        }
-    }
-   catch (err) {
+    result = await client
+      .db("lenotes")
+      .collection("Users")
+      .find(query)
+      .project({ username: 1, _id: 0 , password: 1})
+      .toArray();
+  } catch (err) {
     switch (err.code) {
       case 11000:
         return {
@@ -106,6 +99,5 @@ exports.login = async(data) => {
     await client.close();
   }
 
-
-  return results;
-}
+  return result[0];
+};

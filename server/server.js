@@ -1,3 +1,5 @@
+require('dotenv-safe').config({path: './.env'});
+
 const express = require('express');
 
 const app = express();
