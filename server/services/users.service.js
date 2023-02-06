@@ -18,20 +18,25 @@ exports.get = async (username) => {
   return results;
 };
 
+/**
+ * 
+ * @param {*} data Object with username and password 
+ * @returns Array 
+ */
 exports.login = async (data) => {
   let results = await dao.login(data);
 
-  if (!results.password) {
+  //if the response is empty means the username doesnt exist in the database
+  if (!results || !results.password) {
     return [];
   }
 
   let check = await hasher.compare(results, data);
 
-  if(!check){
+  if (!check) {
     return [];
   }
-  
-  delete results.password;
 
+  delete results.password;
   return results;
 };

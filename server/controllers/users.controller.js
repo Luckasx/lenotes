@@ -1,19 +1,19 @@
-const service = require("./../services/users.service")
+const service = require("./../services/users.service");
 
 exports.create = async (user) => {
-    let results = await service.create(user);
+  let results = await service.create(user);
 
-    return results;
-}
+  return results;
+};
 
-exports.get = async(username) => {
-    let results = await service.get(username);
+exports.get = async (username) => {
+  let results = await service.get(username);
 
-    return results;
-}
+  return results;
+};
 
-exports.login = async(data) => {
-    let results = await service.login(data);
+exports.login = async (data) => {
+  let results = await service.login(data);
 
-    return results;
-}
+  return { data: results };
+};
