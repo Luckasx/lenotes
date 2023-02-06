@@ -30,9 +30,14 @@ export default function SignUpForm() {
       let res = (await axios.post("api/user/login", { data })).data;
 
       if (res.username) {
+        localStorage.setItem("user", JSON.stringify(res));
         navigate("/");
       }
     } catch (err) {
+      
+      //clears the login data on error
+      localStorage.removeItem("user");
+
       //when the response status is 401. we assume it is an invalid login
       if (err.response.status === 401) {
         setInvalidLogin(true);

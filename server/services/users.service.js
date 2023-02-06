@@ -37,6 +37,9 @@ exports.login = async (data) => {
     return [];
   }
 
+  //remove the sent password and retur an object informing the client that authentication is okay
   delete results.password;
+  results.isAuthenticated = true;
+
   return results;
 };
