@@ -5,7 +5,7 @@ import { Nav, Navbar , Container} from "react-bootstrap";
 class LeNavBar extends React.Component {
   render() {
     return (
-      <Navbar bg="light" expand="lg" fixed="top" className="notes-nav-bar">
+      <Navbar bg="light" expand="lg" sticky="top" className="notes-nav-bar">
         <Container>
           <Navbar.Brand href="#home">LE NOTES</Navbar.Brand>
           <Navbar.Toggle />

@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 
-
 import Notes from "../components/Notes";
 import NoteForm from "../components/NoteForm";
-import  LeNavBar from "../components/LeNavBar";
-
+import LeNavBar from "../components/LeNavBar";
 
 import { v4 as uuid } from "uuid";
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 export default class App extends Component {
   constructor(props) {
@@ -51,21 +49,26 @@ export default class App extends Component {
   };
 
   render() {
-
     return (
       <div className="App container-fluid">
         <Row>
-        <LeNavBar />
+          <Col>
+            <LeNavBar />
+          </Col>
         </Row>
         <Row className="mt-4">
-        <p className="App-intro">{this.state.response}</p>
+          <Col>
+            <p className="App-intro">{this.state.response}</p>
+          </Col>
         </Row>
-        <div className="row">
+        <Row>
+          <Col>
           <NoteForm />
-        </div>
-        <div className="row">
+          </Col>
+          </Row>
+        <Row>
           <Notes />
-        </div>
+        </Row>
       </div>
     );
   }
