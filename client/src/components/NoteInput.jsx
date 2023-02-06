@@ -98,7 +98,7 @@ export default class NoteInput extends React.Component {
     let tags = ["span", "div", "p", "script", "html", "body"];
 
     //if it is a html comment, returns empty
-    if (element.nodeName == "#comment") {
+    if (element.nodeName === "#comment") {
       return "";
     }
 
