@@ -1,8 +1,9 @@
 import { React, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from '../config/axios.config'
+
 
 export default function SignUpForm() {
   const {
@@ -27,7 +28,7 @@ export default function SignUpForm() {
       setInvalidLogin(false);
       setErrorOnSignin(false);
 
-      let res = (await axios.post("api/user/login", { data })).data;
+      let res = (await axiosInstance.post("api/user/login", { data })).data;
 
       if (res.username) {
         localStorage.setItem("user", JSON.stringify(res));

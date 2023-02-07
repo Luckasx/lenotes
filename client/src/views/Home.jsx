@@ -7,6 +7,9 @@ import LeNavBar from "../components/LeNavBar";
 import { v4 as uuid } from "uuid";
 import { Row, Col } from "react-bootstrap";
 
+import axiosInstance from '../config/axios.config'
+import axios from "axios";
+
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -25,13 +28,9 @@ export default class App extends Component {
     });
   }
 
-  componentDidUpdate() {
-    console.log("update", this.state.notes);
-  }
-
   callApi = async () => {
-    const response = await fetch("/api/mensagem");
-    const body = await response.json();
+    const response = await axiosInstance.get("/api/mensagem");
+    const body = await response.data;
     if (response.status !== 200) throw Error(body.message);
 
     return body;

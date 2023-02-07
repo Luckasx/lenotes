@@ -1,7 +1,7 @@
 import { React, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
-import axios from "axios";
+import axiosInstance from '../config/axios.config'
 
 //https://upmostly.com/tutorials/the-disabled-attribute-in-react-buttons
 
@@ -20,8 +20,7 @@ export default function SignUpForm() {
   const newuservalidate = require("./../_helpers/newuser.validate");
 
   const onSubmit = (data) => {
-    console.log(data);
-    axios.post("api/user", { data }).then((res) => {
+    axiosInstance.post("api/user", { data }).then((res) => {
       if (res.data.msg === "User Created.") {
         setRegistered(true);
         return;

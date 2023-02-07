@@ -5,9 +5,7 @@ class LeNavBar extends React.Component {
   render() {
     const user = JSON.parse(localStorage.getItem("user"));
 
-    const isAuthenticated = () => {
-      return this.user.isAuthenticated;
-    };
+    const isAuthenticated = (user && user.isAuthenticated);
 
     return (
       <Navbar bg="light" expand="lg" sticky="top" className="notes-nav-bar">
