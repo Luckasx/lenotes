@@ -8,7 +8,6 @@ import { v4 as uuid } from "uuid";
 import { Row, Col } from "react-bootstrap";
 
 import axiosInstance from '../config/axios.config'
-import axios from "axios";
 
 export default class App extends Component {
   constructor(props) {
