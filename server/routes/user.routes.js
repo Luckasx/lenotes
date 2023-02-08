@@ -2,7 +2,6 @@
 const { Router } = require("express");
 const usersController = require("../controllers/users.controller");
 
-const jwt_helper = require("../_helpers/jwt_helper");
 
 // app.use(bodyParser.json());
 // app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,25 +21,7 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  let result = await usersController.login(req.body.data);
-
-  if (result.data.username) {
-    const token = await jwt_helper.sign(result.data);
-
-    const refreshToken = jwt_helper.signRefresh(result.data);
-
-    res
-      .cookie("token", token, { httpOnly: true, secure: true })
-      .cookie("rtoken", refreshToken, { httpOnly: true, secure: true })
-      .status(result.status || 200)
-      .json(result.data);
-
-    return;
-  }
-
-  result.status = 401;
-
-  res.status(result.status || 200).json(result.data);
+  usersController.login(req, res);
 });
 
 module.exports = router;

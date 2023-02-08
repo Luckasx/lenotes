@@ -1,5 +1,7 @@
 const service = require("./../services/users.service");
 
+const jwt_helper = require("../_helpers/jwt_helper");
+
 exports.create = async (user) => {
   let results = await service.create(user);
 
@@ -12,8 +14,27 @@ exports.get = async (username) => {
   return results;
 };
 
-exports.login = async (data) => {
-  let results = await service.login(data);
+exports.login = async (req, res) => {
+  let result = {};
+  result.data = await service.login(req.body.data);
 
-  return { data: results };
+  if (result.data && result.data?.username) {
+    const token = await jwt_helper.sign(result.data);
+
+    const refreshToken = jwt_helper.signRefresh(result.data);
+
+    res
+      .cookie("token", token, { httpOnly: true, secure: true })
+      .cookie("rtoken", refreshToken, { httpOnly: true, secure: true })
+      .status(result.status || 200)
+      .json(result.data);
+
+    return;
+  }
+
+  result.status = 401;
+
+  res.status(result.status || 200).json(result.data);
+
+  
 };
