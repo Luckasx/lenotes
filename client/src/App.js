@@ -7,6 +7,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from './views/Home'
 import  Signup from './views/Signup'
 import  Signin from './views/Signin'
+import  Signout from './views/SignOut'
 
 export default class App extends Component {
   constructor(props) {
@@ -24,6 +25,8 @@ export default class App extends Component {
       <Route path="/" element={<Home />} />
       <Route path="signup" element={<Signup />} />
       <Route path="signin" element={<Signin />} />
+      <Route path="logout" element={<Signout />} />
+
     </Routes>
     );
   }

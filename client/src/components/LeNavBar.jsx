@@ -5,13 +5,13 @@ class LeNavBar extends React.Component {
   render() {
     const user = JSON.parse(localStorage.getItem("user"));
 
-    const isAuthenticated = (user && user.isAuthenticated);
+    const isAuthenticated = user && user.isAuthenticated;
 
     return (
       <Navbar bg="light" expand="lg" sticky="top" className="notes-nav-bar">
         <Container>
-          <Navbar.Brand href="#home">LE NOTES</Navbar.Brand>          
-          {!isAuthenticated && (            
+          <Navbar.Brand href="#home">LE NOTES</Navbar.Brand>
+          {!isAuthenticated && (
             <Navbar.Collapse className="justify-content-end">
               <Nav.Link href="/signup">Get Access</Nav.Link>
               <Nav.Link className="ms-4" href="/signin">
@@ -19,7 +19,12 @@ class LeNavBar extends React.Component {
               </Nav.Link>
             </Navbar.Collapse>
           )}
-          {isAuthenticated && <Navbar.Text>Hello {user.username}</Navbar.Text>}
+          {isAuthenticated && (
+            <Nav>
+              <Navbar.Text>Hello {user.username}</Navbar.Text>
+              <Nav.Link href="/logout">Logout</Nav.Link>
+            </Nav>
+          )}
         </Container>
       </Navbar>
     );
