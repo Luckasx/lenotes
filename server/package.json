@@ -7,7 +7,18 @@
         "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
         "test-server": "cd server && jest --coverage",
         "test-client": "cd client && jest --coverage"
-    },    
+    },
+    "dependencies": {
+        "bcrypt": "^5.1.0",
+        "cookie-parser": "^1.4.6",
+        "date-fns": "^2.29.3",
+        "dotenv-safe": "^8.2.0",
+        "express": "^4.16.2",
+        "jsonwebtoken": "^9.0.0",
+        "mongodb": "^4.11.0",
+        "nodemon": "^2.0.18",
+        "uuid": "^8.3.2"
+    },
     "devDependencies": {
         "concurrently": "^3.5.0",
         "jest": "^29.4.2"
