@@ -11,12 +11,18 @@ class LeNavBar extends React.Component {
       <Navbar bg="light" expand="lg" sticky="top" className="notes-nav-bar">
         <Container>
           <Navbar.Brand href="#home">LE NOTES</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
           {!isAuthenticated && (
-            <Navbar.Collapse className="justify-content-end">
-              <Nav.Link href="/signup">Get Access</Nav.Link>
-              <Nav.Link className="ms-4" href="/signin">
-                Sign in
-              </Nav.Link>
+            <Navbar.Collapse
+              id="basic-navbar-nav"
+              className="justify-content-end"
+            >
+              <Nav>
+                <Nav.Link href="/signup">Get Access</Nav.Link>
+                <Nav.Link className="ms-4" href="/signin">
+                  Sign in
+                </Nav.Link>
+              </Nav>
             </Navbar.Collapse>
           )}
           {isAuthenticated && (
