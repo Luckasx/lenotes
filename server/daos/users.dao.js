@@ -80,7 +80,7 @@ exports.login = async (data) => {
       .db("lenotes")
       .collection("Users")
       .find(query)
-      .project({ username: 1, _id: 0 , password: 1})
+      .project({ username: 1, _id: 0, password: 1 })
       .toArray();
   } catch (err) {
     switch (err.code) {
@@ -100,4 +100,34 @@ exports.login = async (data) => {
   }
 
   return result[0];
+};
+
+/**
+ * It deletes previous refresh token and store the new one
+ * @param {*} refreshToken Object containing username, rtoken and expires (date)
+ * @returns Result from database insert
+ */
+exports.storeRefreshToken = async (refreshToken) => {
+  await client.connect();
+
+  try {
+    //first delete previous refreshTokens of the user
+    await client
+      .db("lenotes")
+      .collection("Tokens")
+      .deleteMany({ username: refreshToken.username });
+
+    //store the new token
+    const result = await client
+      .db("lenotes")
+      .collection("Tokens")
+      .insertOne(refreshToken);
+
+    return result;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  } finally {
+    await client.close();
+  }
 };

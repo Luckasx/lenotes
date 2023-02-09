@@ -27,7 +27,7 @@ exports.login = async (req, res) => {
 
     let oToken = {username: result.data.username, rtoken: refreshToken, expires: date_helper.addHours({hours: 1}) }
 
-    console.log(oToken)
+    await service.storeRefreshToken(oToken);
 
     res
       .cookie("token", token, { httpOnly: true, secure: true })

@@ -43,3 +43,7 @@ exports.login = async (data) => {
 
   return results;
 };
+
+exports.storeRefreshToken = async (refreshToken) => {
+  await dao.storeRefreshToken(refreshToken)
+}
