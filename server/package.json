@@ -1,13 +1,7 @@
 {
     "name": "node-react",
     "version": "1.0.0",
-    "scripts": {
-        "client": "cd client && npm start",
-        "server": "cd server && nodemon server.js",
-        "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
-        "test-server": "cd server && jest --coverage",
-        "test-client": "cd client && jest --coverage"
-    },
+    "scripts": {},
     "dependencies": {
         "bcrypt": "^5.1.0",
         "cookie-parser": "^1.4.6",
@@ -16,7 +10,6 @@
         "express": "^4.16.2",
         "jsonwebtoken": "^9.0.0",
         "mongodb": "^4.11.0",
-        "nodemon": "^2.0.18",
         "uuid": "^8.3.2"
     },
     "devDependencies": {
