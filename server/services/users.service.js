@@ -37,13 +37,37 @@ exports.login = async (data) => {
     return [];
   }
 
-  //remove the sent password and retur an object informing the client that authentication is okay
+  //remove the sent password and return an object informing the client that authentication is okay
   delete results.password;
   results.isAuthenticated = true;
 
   return results;
 };
 
+/**
+ * Calls dao to store the refresh token
+ * @param {*} refreshToken 
+ */
 exports.storeRefreshToken = async (refreshToken) => {
   await dao.storeRefreshToken(refreshToken)
+}
+
+/**
+ * It Queries the database for a valid token
+ * @param {*} data 
+ * @param {*} refreshToken 
+ * @returns 
+ */
+exports.checkRefreshToken = async (data, refreshToken) => {
+  let result = await dao.getRefreshToken(data, refreshToken)
+
+  if(result.username){
+    result.isAuthenticated = true;
+  }
+
+  return result;
+}
+
+exports.deleteToken = async ( refreshToken) => {
+  return await dao.deleteToken( refreshToken)
 }
