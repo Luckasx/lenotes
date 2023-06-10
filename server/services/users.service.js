@@ -61,7 +61,7 @@ exports.storeRefreshToken = async (refreshToken) => {
 exports.checkRefreshToken = async (data, refreshToken) => {
   let result = await dao.getRefreshToken(data, refreshToken)
 
-  if(result.username){
+  if(result != null && result.refreshToken.username){
     result.isAuthenticated = true;
   }
 

@@ -91,7 +91,7 @@ exports.login = async (data) => {
         };
       default:
         return {
-          msg: "There is a problem on the server. Please try again in a few momements.",
+          msg: "There is a problem on the server. Please try again in a few moments.",
           status: 503,
         };
     }
@@ -121,7 +121,61 @@ exports.storeRefreshToken = async (refreshToken) => {
     const result = await client
       .db("lenotes")
       .collection("Tokens")
-      .insertOne(refreshToken);
+      .insertOne({ refreshToken });
+
+    return result;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  } finally {
+    await client.close();
+  }
+};
+
+/**
+ * It queries the database checking if a refresh token is still valid.
+ * @param {*} data
+ * @param {*} refreshToken
+ * @returns
+ */
+exports.getRefreshToken = async (data, refreshToken) => {
+  await client.connect();
+
+  try {
+    //check if the sent token is on db
+    let result = await client
+      .db("lenotes")
+      .collection("Tokens")
+      .findOne(
+        {
+          "refreshToken.username": data.username,
+          "refreshToken.rtoken": refreshToken,
+        }
+
+        // { projection: { username: 1, _id: 0 } }
+      );
+
+    return result;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  } finally {
+    await client.close();
+  }
+};
+
+/**
+ * It queries the database deleting a used refresh token
+ * @param {*} refreshToken
+ * @returns
+ */
+exports.deleteToken = async (refreshToken) => {
+  await client.connect();
+
+  try {
+    let result = await client.db("lenotes").collection("Tokens").deleteOne({
+      "refreshToken.rtoken": refreshToken,
+    });
 
     return result;
   } catch (err) {
