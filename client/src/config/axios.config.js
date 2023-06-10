@@ -48,7 +48,7 @@ axiosInstance.interceptors.response.use(
 
       let res = (await refreshToken(error.response)).data;
 
-      if (res != []) {
+      if (res !== []) {
         processQueue(null);
         return Promise.resolve(axios(originalRequest));
       }
