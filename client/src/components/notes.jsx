@@ -2,6 +2,7 @@ import React from "react";
 import parse from "html-react-parser";
 import { Row, Col } from "react-bootstrap";
 import NoteFooter from "./NoteFooter";
+import axiosInstance from "../config/axios.config";
 
 class Notes extends React.Component {
 
@@ -25,7 +26,7 @@ class Notes extends React.Component {
 
 
   getNotes = async () => {
-    const response = await fetch("/api/notes");
+    const response = await axiosInstance.get("/api/notes");
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
 
