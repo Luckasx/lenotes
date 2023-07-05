@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import ColorPicker from "./ColorPicker";
 import NoteInput from "./NoteInput";
+import axiosInstance from "../config/axios.config";
 
 export default class NoteForm extends React.Component {
   constructor(props) {
@@ -62,18 +63,23 @@ export default class NoteForm extends React.Component {
 
     let texttoupload = await this.prepareNote();
 
-    let response = await fetch("/api/notes", {
-      method: "POST",
-      body: JSON.stringify({
-        text: texttoupload,
-        visibility: this.state.visibility,
-        backcolor: this.state.backcolor,
-      }),
-      // Adding headers to the request
+    // Adding headers to the request
+    let config = {
       headers: {
         "Content-type": "application/json; charset=UTF-8",
       },
-    });
+    };
+
+    let response = await axiosInstance.post(
+      "/api/notes",
+      {
+        text: texttoupload,
+        visibility: this.state.visibility,
+        backcolor: this.state.backcolor,
+      },
+      config
+    );
+    
 
     this.showFeedbackCreation(response);
   };
