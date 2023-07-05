@@ -11,12 +11,25 @@ import "./styles/navbar.css";
 import "./styles/notes.css";
 
 
+import { Routes, Route } from "react-router-dom";
+import Home from "./views/Home";
+import Signup from "./views/Signup";
+import Signin from "./views/Signin";
+import Signout from "./views/SignOut";
+
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
     <BrowserRouter>
       <App />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="signup" element={<Signup />} />
+        <Route path="signin" element={<Signin />} />
+        <Route path="logout" element={<Signout />} />
+      </Routes>
     </BrowserRouter>
   </>
 );
