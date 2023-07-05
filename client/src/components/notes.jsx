@@ -27,13 +27,18 @@ class Notes extends React.Component {
 
   getNotes = async () => {
     const response = await axiosInstance.get("/api/notes");
-    const body = await response.json();
+    const body = await response.data;
     if (response.status !== 200) throw Error(body.message);
 
     return body;
   };
 
   getNoteSize(note) {
+
+    if(note.text == null){
+      return 0;
+    }
+
     if (note.text.length <= 100) {
       return 2;
     }
@@ -46,8 +51,8 @@ class Notes extends React.Component {
   }
 
   render() {
-    if (this.state.knotes === undefined) {
-      return <span>No notes =(</span>;
+    if (this.state.knotes === undefined || this.state.knotes.length === 0) {
+      return <span>Wow, such empty. =(</span>;
     }
 
     return (
