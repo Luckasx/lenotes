@@ -15,8 +15,11 @@ export default class App extends Component {
 
     this.state = {
       response: "",
+     
     };
   }
+
+  
 
   async componentDidMount() {
     let message = "";
@@ -47,6 +50,9 @@ export default class App extends Component {
   };
 
   render() {
+
+    const  isLoggedIn =  JSON.parse(localStorage.getItem("user"))?.isAuthenticated;
+
     return (
       <div className="App container-fluid">
         <Row>
@@ -59,11 +65,12 @@ export default class App extends Component {
             <p className="App-intro">{this.state.response}</p>
           </Col>
         </Row>
-        <Row>
+        
+        { isLoggedIn ? (<Row>
           <Col>
           <NoteForm />
           </Col>
-          </Row>
+          </Row>) : "" }
         <Row>
           <Notes />
         </Row>
