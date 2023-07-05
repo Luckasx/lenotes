@@ -2,8 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const notesController = require("../controllers/notes.controller");
 
-// router.use(express.json());
-// router.use(express.urlencoded({ extended: true }));
+const auth = require('./../_helpers/auth')
 
 router.get("/", async (req, res) => {
   let results = await notesController.find();
@@ -11,7 +10,7 @@ router.get("/", async (req, res) => {
   res.send(results);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   let results = await notesController.insert(req, res);
 
   res.send(results);
