@@ -67,7 +67,7 @@ exports.login = async (req, res) => {
   let result = {};
   result.data = await service.login(req.body.data);
 
-  if (result.data && result.data?.username) {
+  if (result.data?.username) {
     const token = await jwt_helper.sign(result.data);
 
     const refreshToken = jwt_helper.signRefresh(result.data);
