@@ -46,9 +46,9 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      let res = (await refreshToken(error.response)).data;
+      let res = (await refreshToken()).data;
 
-      if (res !== []) {
+      if (res.length !== 0) {
         processQueue(null);
         return Promise.resolve(axios(originalRequest));
       }
@@ -58,6 +58,7 @@ axiosInstance.interceptors.response.use(
 
     if (error.response?.status === 401) {
       localStorage.removeItem("user");
+      window.location = "/"
     }
     return Promise.reject(error);
   }
